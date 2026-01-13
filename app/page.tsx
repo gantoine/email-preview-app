@@ -38,7 +38,12 @@ export default function Home() {
 
   const handleTemplateChange = (template: Template) => {
     setActiveTemplate(template);
-    setCode(renderToStaticMarkup(<template.component />));
+    setCode(
+      renderToStaticMarkup(
+        // @ts-expect-error PreviewProps exists
+        <template.component {...template.component.PreviewProps} />,
+      ),
+    );
   };
 
   return (
@@ -64,44 +69,40 @@ export default function Home() {
             ))}
           </ul>
         </aside>
-        <div className="flex-1 flex flex-col">
-          <div className="h-full overflow-auto">
-            <Editor
-              value={code}
-              onValueChange={setCode}
-              highlight={(code) => highlight(code, languages.markup, "markup")}
-              padding={10}
-              style={{
-                fontFamily: '"Fira code", "Fira Mono", monospace',
-                fontSize: 12,
-              }}
-            />
-          </div>
+        <div className="flex-1 grid grid-cols-2">
+          <Editor
+            value={code}
+            onValueChange={setCode}
+            highlight={(code) => highlight(code, languages.markup, "markup")}
+            padding={10}
+            style={{
+              fontFamily: '"Fira code", "Fira Mono", monospace',
+              fontSize: 12,
+            }}
+          />
 
-          <div className="h-full bg-gray-100 dark:bg-black">
-            <Tabs className="h-full">
-              <TabList>
-                <Tab>Apple Mail</Tab>
-                <Tab>Gmail</Tab>
-                <Tab>Outlook</Tab>
-              </TabList>
-              <TabPanel>
-                <ClientWrapper>
-                  <AppleMail html={code} />
-                </ClientWrapper>
-              </TabPanel>
-              <TabPanel>
-                <ClientWrapper>
-                  <Gmail html={code} />
-                </ClientWrapper>
-              </TabPanel>
-              <TabPanel>
-                <ClientWrapper>
-                  <Outlook html={code} />
-                </ClientWrapper>
-              </TabPanel>
-            </Tabs>
-          </div>
+          <Tabs>
+            <TabList>
+              <Tab>Apple Mail</Tab>
+              <Tab>Gmail</Tab>
+              <Tab>Outlook</Tab>
+            </TabList>
+            <TabPanel>
+              <ClientWrapper>
+                <AppleMail html={code} />
+              </ClientWrapper>
+            </TabPanel>
+            <TabPanel>
+              <ClientWrapper>
+                <Gmail html={code} />
+              </ClientWrapper>
+            </TabPanel>
+            <TabPanel>
+              <ClientWrapper>
+                <Outlook html={code} />
+              </ClientWrapper>
+            </TabPanel>
+          </Tabs>
         </div>
       </div>
     </main>

@@ -64,7 +64,7 @@ export const NotionMagicLinkEmail = ({
           account.
         </Text>
         <Img
-          src={`${baseUrl}/static/notion-logo.png`}
+          src={`${baseUrl}/notion-logo.png`}
           width="32"
           height="32"
           alt="Notion's Logo"

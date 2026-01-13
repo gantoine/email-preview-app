@@ -13,8 +13,6 @@ const ClientWrapper = ({
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // The wrapper now controls the dark mode, and passes it down to the child component
-  // It also contains the "browser" chrome.
   return (
     <div className={`flex flex-col h-full`}>
       <div
