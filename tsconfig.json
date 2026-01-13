@@ -11,6 +11,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "incremental": true,
+    "allowJs": true,
+    "skipLibCheck": true,
     "plugins": [
       {
         "name": "next"

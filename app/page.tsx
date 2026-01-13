@@ -1,65 +1,109 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import Editor from "react-simple-code-editor";
+import { highlight, languages } from "prismjs";
+import "prismjs/components/prism-clike";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-markup";
+import "prismjs/themes/prism.css";
+import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
+
+import AppleMail from "./components/clients/apple-mail";
+import Gmail from "./components/clients/gmail";
+import Outlook from "./components/clients/outlook";
+import ClientWrapper from "./components/clients/client-wrapper";
+
+import NotionMagicLinkEmail from "./emails/notion-magic-link";
+import PlaidVerifyIdentityEmail from "./emails/plaid-verify-identity";
+import StripeWelcomeEmail from "./emails/stripe-welcome";
+import VercelInviteUserEmail from "./emails/vercel-invite-user";
+
+type Template = {
+  name: string;
+  component: React.ComponentType;
+};
+
+const templates: Template[] = [
+  { name: "Notion Magic Link", component: NotionMagicLinkEmail },
+  { name: "Plaid Verify Identity", component: PlaidVerifyIdentityEmail },
+  { name: "Stripe Welcome", component: StripeWelcomeEmail },
+  { name: "Vercel Invite User", component: VercelInviteUserEmail },
+];
 
 export default function Home() {
+  const [activeTemplate, setActiveTemplate] = useState(templates[0]);
+  const [code, setCode] = useState("");
+
+  const handleTemplateChange = (template: Template) => {
+    setActiveTemplate(template);
+    setCode(renderToStaticMarkup(<template.component />));
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <main className="flex flex-col h-screen dark:text-white">
+      <header className="py-3 px-4 border-b border-divider dark:border-gray-800">
+        <h1 className="text-lg font-bold">Email Preview</h1>
+      </header>
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="w-64 border-r border-divider dark:border-gray-800 p-4">
+          <h2 className="text-md font-semibold mb-4">Templates</h2>
+          <ul>
+            {templates.map((template) => (
+              <li key={template.name}>
+                <button
+                  onClick={() => handleTemplateChange(template)}
+                  className={`w-full text-left p-2 rounded ${
+                    activeTemplate.name === template.name ? "darken" : ""
+                  }`}
+                >
+                  {template.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+        <div className="flex-1 flex flex-col">
+          <div className="h-full overflow-auto">
+            <Editor
+              value={code}
+              onValueChange={setCode}
+              highlight={(code) => highlight(code, languages.markup, "markup")}
+              padding={10}
+              style={{
+                fontFamily: '"Fira code", "Fira Mono", monospace',
+                fontSize: 12,
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+
+          <div className="h-full bg-gray-100 dark:bg-black">
+            <Tabs className="h-full">
+              <TabList>
+                <Tab>Apple Mail</Tab>
+                <Tab>Gmail</Tab>
+                <Tab>Outlook</Tab>
+              </TabList>
+              <TabPanel>
+                <ClientWrapper>
+                  <AppleMail html={code} />
+                </ClientWrapper>
+              </TabPanel>
+              <TabPanel>
+                <ClientWrapper>
+                  <Gmail html={code} />
+                </ClientWrapper>
+              </TabPanel>
+              <TabPanel>
+                <ClientWrapper>
+                  <Outlook html={code} />
+                </ClientWrapper>
+              </TabPanel>
+            </Tabs>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
