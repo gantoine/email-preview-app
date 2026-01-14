@@ -6,16 +6,16 @@ import Editor from "@monaco-editor/react";
 import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import { prettify } from "htmlfy";
 
-import { cx } from "./lib/utils";
-import AppleMail from "./components/clients/apple-mail";
-import Gmail from "./components/clients/gmail";
-import Outlook from "./components/clients/outlook";
-import ClientWrapper from "./components/clients/client-wrapper";
+import { cx } from "@/lib/utils";
+import AppleMail from "@/components/apple-mail";
+import Gmail from "@/components/gmail";
+import Outlook from "@/components/outlook";
+import ClientWrapper from "@/components/client-wrapper";
 
-import NotionMagicLinkEmail from "./emails/notion-magic-link";
-import PlaidVerifyIdentityEmail from "./emails/plaid-verify-identity";
-import StripeWelcomeEmail from "./emails/stripe-welcome";
-import VercelInviteUserEmail from "./emails/vercel-invite-user";
+import NotionMagicLinkEmail from "@/emails/notion-magic-link";
+import PlaidVerifyIdentityEmail from "@/emails/plaid-verify-identity";
+import StripeWelcomeEmail from "@/emails/stripe-welcome";
+import VercelInviteUserEmail from "@/emails/vercel-invite-user";
 
 type Template = {
   name: string;
@@ -73,13 +73,7 @@ export default function Home() {
           <Editor
             value={code}
             defaultLanguage="html"
-            // onValueChange={setCode}
-            // highlight={(code) => highlight(code, languages.markup, "markup")}
-            // padding={10}
-            // style={{
-            //   fontFamily: '"Fira code", "Fira Mono", monospace',
-            //   fontSize: 12,
-            // }}
+            onChange={(value) => setCode(value ?? "")}
           />
 
           <Tabs

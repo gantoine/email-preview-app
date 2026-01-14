@@ -2,25 +2,10 @@
 
 import { Mailbox, Sidebar, Wifi } from "lucide-react";
 import { format } from "date-fns";
-import { useState, createContext, useContext, ReactNode } from "react";
+import { useState, ReactNode } from "react";
+import { DarkModeContext } from "@/hooks/use-dark-mode";
 
 const today = format(new Date(), "h:mm a");
-
-type DarkModeContextType = {
-  isDarkMode: boolean;
-};
-
-const DarkModeContext = createContext<DarkModeContextType | undefined>(
-  undefined,
-);
-
-export const useDarkMode = () => {
-  const context = useContext(DarkModeContext);
-  if (!context) {
-    throw new Error("useDarkMode must be used within a DarkModeProvider");
-  }
-  return context;
-};
 
 const ClientWrapper = ({ children }: { children: ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);

@@ -1,7 +1,8 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useDarkMode } from "./client-wrapper";
+
+import { useDarkMode } from "@/hooks/use-dark-mode";
 
 const AppleMail = ({ html }: { html: string }) => {
   const { isDarkMode } = useDarkMode();
