@@ -1,12 +1,9 @@
 "use client";
 
-const Outlook = ({
-  html,
-  isDarkMode = false,
-}: {
-  html: string;
-  isDarkMode?: boolean;
-}) => {
+import { useDarkMode } from "./client-wrapper";
+
+const Outlook = ({ html }: { html: string }) => {
+  const { isDarkMode } = useDarkMode();
   return (
     <div
       className={`${

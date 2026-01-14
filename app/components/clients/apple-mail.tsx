@@ -1,14 +1,10 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { useDarkMode } from "./client-wrapper";
 
-const AppleMail = ({
-  html,
-  isDarkMode = false,
-}: {
-  html: string;
-  isDarkMode?: boolean;
-}) => {
+const AppleMail = ({ html }: { html: string }) => {
+  const { isDarkMode } = useDarkMode();
   return (
     <div className="flex-1 flex overflow-hidden">
       <div

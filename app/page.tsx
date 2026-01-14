@@ -4,12 +4,12 @@ import { useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs";
+import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-markup";
-import "prismjs/themes/prism.css";
-import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 
+import { cx } from "./lib/utils";
 import AppleMail from "./components/clients/apple-mail";
 import Gmail from "./components/clients/gmail";
 import Outlook from "./components/clients/outlook";
@@ -35,6 +35,7 @@ const templates: Template[] = [
 export default function Home() {
   const [activeTemplate, setActiveTemplate] = useState(templates[0]);
   const [code, setCode] = useState("");
+  const [tabIndex, setTabIndex] = useState(0);
 
   const handleTemplateChange = (template: Template) => {
     setActiveTemplate(template);
@@ -81,23 +82,26 @@ export default function Home() {
             }}
           />
 
-          <Tabs>
-            <TabList>
+          <Tabs
+            selectedIndex={tabIndex}
+            onSelect={(index) => setTabIndex(index)}
+          >
+            <TabList className="m-0">
               <Tab>Apple Mail</Tab>
               <Tab>Gmail</Tab>
               <Tab>Outlook</Tab>
             </TabList>
-            <TabPanel>
+            <TabPanel className={cx({ "h-full": tabIndex === 0 })}>
               <ClientWrapper>
                 <AppleMail html={code} />
               </ClientWrapper>
             </TabPanel>
-            <TabPanel>
+            <TabPanel className={cx({ "h-full": tabIndex === 1 })}>
               <ClientWrapper>
                 <Gmail html={code} />
               </ClientWrapper>
             </TabPanel>
-            <TabPanel>
+            <TabPanel className={cx({ "h-full": tabIndex === 2 })}>
               <ClientWrapper>
                 <Outlook html={code} />
               </ClientWrapper>

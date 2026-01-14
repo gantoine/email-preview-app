@@ -1,12 +1,9 @@
 "use client";
 
-const Gmail = ({
-  html,
-  isDarkMode = false,
-}: {
-  html: string;
-  isDarkMode?: boolean;
-}) => {
+import { useDarkMode } from "./client-wrapper";
+
+const Gmail = ({ html }: { html: string }) => {
+  const { isDarkMode } = useDarkMode();
   return (
     <div
       className={`${isDarkMode ? "bg-gray-800 text-white" : "bg-white"} h-full`}
