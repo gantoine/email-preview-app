@@ -16,6 +16,7 @@ import NotionMagicLinkEmail from "@/emails/notion-magic-link";
 import PlaidVerifyIdentityEmail from "@/emails/plaid-verify-identity";
 import StripeWelcomeEmail from "@/emails/stripe-welcome";
 import VercelInviteUserEmail from "@/emails/vercel-invite-user";
+import { useDarkMode } from "./hooks/use-dark-mode";
 
 type Template = {
   name: string;
@@ -33,6 +34,7 @@ export default function Home() {
   const [activeTemplate, setActiveTemplate] = useState(templates[0]);
   const [code, setCode] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
+  const { isDarkMode } = useDarkMode();
 
   const handleTemplateChange = (template: Template) => {
     setActiveTemplate(template);
@@ -74,6 +76,7 @@ export default function Home() {
             value={code}
             defaultLanguage="html"
             onChange={(value) => setCode(value ?? "")}
+            theme={isDarkMode ? "vs-dark" : "light"}
           />
 
           <Tabs

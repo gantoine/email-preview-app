@@ -14,11 +14,7 @@ import {
   Trash,
 } from "lucide-react";
 
-import { useDarkMode } from "@/hooks/use-dark-mode";
-
 const Gmail = ({ html }: { html: string }) => {
-  const { isDarkMode } = useDarkMode();
-
   return (
     <div
       className={`flex flex-col h-full ${
