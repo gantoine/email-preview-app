@@ -17,3 +17,7 @@
 body {
   background: var(--background);
 }
+
+.react-tabs__tab--selected:after {
+  display: none;
+}

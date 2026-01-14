@@ -6,7 +6,6 @@ import {
   Html,
   Img,
   Link,
-  Preview,
   Text,
 } from "@react-email/components";
 
@@ -24,7 +23,6 @@ export const NotionMagicLinkEmail = ({
   <Html>
     <Head />
     <Body style={main}>
-      <Preview>Log in with this magic link</Preview>
       <Container style={container}>
         <Heading style={h1}>Login</Heading>
         <Link

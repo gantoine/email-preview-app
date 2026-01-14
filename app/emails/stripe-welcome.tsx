@@ -7,7 +7,6 @@ import {
   Html,
   Img,
   Link,
-  Preview,
   Section,
   Text,
 } from "@react-email/components";
@@ -20,7 +19,6 @@ export const StripeWelcomeEmail = () => (
   <Html>
     <Head />
     <Body style={main}>
-      <Preview>You're now ready to make live transactions with Stripe!</Preview>
       <Container style={container}>
         <Section style={box}>
           <Img

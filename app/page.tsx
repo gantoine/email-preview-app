@@ -2,12 +2,9 @@
 
 import { useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import Editor from "react-simple-code-editor";
-import { highlight, languages } from "prismjs";
+import Editor from "@monaco-editor/react";
 import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
-import "prismjs/components/prism-clike";
-import "prismjs/components/prism-javascript";
-import "prismjs/components/prism-markup";
+import { prettify } from "htmlfy";
 
 import { cx } from "./lib/utils";
 import AppleMail from "./components/clients/apple-mail";
@@ -40,9 +37,11 @@ export default function Home() {
   const handleTemplateChange = (template: Template) => {
     setActiveTemplate(template);
     setCode(
-      renderToStaticMarkup(
-        // @ts-expect-error PreviewProps exists
-        <template.component {...template.component.PreviewProps} />,
+      prettify(
+        renderToStaticMarkup(
+          // @ts-expect-error PreviewProps exists
+          <template.component {...template.component.PreviewProps} />,
+        ),
       ),
     );
   };
@@ -73,13 +72,14 @@ export default function Home() {
         <div className="flex-1 grid grid-cols-2">
           <Editor
             value={code}
-            onValueChange={setCode}
-            highlight={(code) => highlight(code, languages.markup, "markup")}
-            padding={10}
-            style={{
-              fontFamily: '"Fira code", "Fira Mono", monospace',
-              fontSize: 12,
-            }}
+            defaultLanguage="html"
+            // onValueChange={setCode}
+            // highlight={(code) => highlight(code, languages.markup, "markup")}
+            // padding={10}
+            // style={{
+            //   fontFamily: '"Fira code", "Fira Mono", monospace',
+            //   fontSize: 12,
+            // }}
           />
 
           <Tabs

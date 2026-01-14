@@ -9,7 +9,6 @@ import {
   Html,
   Img,
   Link,
-  Preview,
   Row,
   Section,
   Tailwind,
@@ -43,15 +42,12 @@ export const VercelInviteUserEmail = ({
   inviteFromIp,
   inviteFromLocation,
 }: VercelInviteUserEmailProps) => {
-  const previewText = `Join ${invitedByUsername} on Vercel`;
-
   return (
     <Html>
       <Head />
       <Tailwind>
         <Body className="mx-auto my-auto bg-white px-2 font-sans">
-          <Preview>{previewText}</Preview>
-          <Container className="mx-auto my-10 max-w-116.5 rounded border border-[#eaeaea] border-solid p-5">
+          <Container className="mx-auto my-10 max-w-116.5 rounded border border-gray-100 border-solid p-5">
             <Section className="mt-8">
               <Img
                 src={`${baseUrl}/vercel-logo.png`}
@@ -108,7 +104,7 @@ export const VercelInviteUserEmail = ({
             </Section>
             <Section className="mt-8 mb-8 text-center">
               <Button
-                className="rounded bg-[#000000] px-5 py-3 text-center font-semibold text-[12px] text-white no-underline"
+                className="rounded bg-black px-5 py-3 text-center font-semibold text-[12px] text-white no-underline"
                 href={inviteLink}
               >
                 Join the team
@@ -120,8 +116,8 @@ export const VercelInviteUserEmail = ({
                 {inviteLink}
               </Link>
             </Text>
-            <Hr className="mx-0 my-6.5 w-full border border-[#eaeaea] border-solid" />
-            <Text className="text-[#666666] text-[12px] leading-6">
+            <Hr className="mx-0 my-6.5 w-full border border-gray-200 border-solid" />
+            <Text className="text-gray-400 text-[12px] leading-6">
               This invitation was intended for{" "}
               <span className="text-black">{username}</span>. This invite was
               sent from <span className="text-black">{inviteFromIp}</span>{" "}

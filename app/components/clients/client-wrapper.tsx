@@ -31,15 +31,15 @@ const ClientWrapper = ({ children }: { children: ReactNode }) => {
         <div
           className={`flex items-center justify-between text-sm py-1.5 px-4 border-b ${
             isDarkMode
-              ? "bg-[#3c3c3c] border-[#2a2a2a] text-white"
-              : "bg-[#f6f6f6] border-[#ddd] text-black"
+              ? "bg-gray-700 border-gray-800 text-white"
+              : "bg-gray-200 border-gray-300 text-black"
           }`}
         >
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <div className="w-2.5 h-2.5 bg-[#f55648] rounded-full" />
-              <div className="w-2.5 h-2.5 bg-[#fdbd2e] rounded-full" />
-              <div className="w-2.5 h-2.5 bg-[#27c840] rounded-full" />
+              <div className="w-2.5 h-2.5 bg-red-400 rounded-full" />
+              <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full" />
+              <div className="w-2.5 h-2.5 bg-green-400 rounded-full" />
             </div>
             <div className="flex items-center gap-1">
               <Sidebar size={16} />
